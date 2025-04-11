@@ -1,5 +1,6 @@
 /* SPDX-License-Identifier: GPL-2.0-only */
 
+#include <bootblock_common.h>
 #include <soc/gpio.h>
 
 /* Early pad configuration */

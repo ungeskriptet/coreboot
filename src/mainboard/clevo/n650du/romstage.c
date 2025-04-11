@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: GPL-2.0-only */
 
 #include <fsp/api.h>
+#include <soc/romstage.h>
 #include <spd_bin.h>
 #include <string.h>
 

@@ -3,4 +3,4 @@
 comment "Skylake / Kaby Lake"
 
 config BOARD_CLEVO_N650DU
-	bool "N650UD"
+	bool "N650DU"
