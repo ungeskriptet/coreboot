@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+comment "Skylake / Kaby Lake"
+
+config BOARD_CLEVO_N650DU
+	bool "N650UD"
