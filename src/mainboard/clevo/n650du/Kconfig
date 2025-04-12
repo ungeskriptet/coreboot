@@ -31,6 +31,9 @@ config MAINBOARD_DIR
 config MAINBOARD_PART_NUMBER
 	default "N650DU"
 
+config CBFS_SIZE
+	default 0x500000
+
 config INTEL_GMA_VBT_FILE
 	default "src/mainboard/\$(MAINBOARDDIR)/data.vbt"
 
