@@ -37,6 +37,10 @@ config CBFS_SIZE
 config INTEL_GMA_VBT_FILE
 	default "src/mainboard/\$(MAINBOARDDIR)/data.vbt"
 
+config VGA_BIOS_ID
+	string
+	default "8086,5912"
+
 config DIMM_SPD_SIZE
 	default 512	# DDR4
 

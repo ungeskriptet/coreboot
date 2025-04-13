@@ -1,6 +1,18 @@
 # SPDX-License-Identifier: GPL-2.0-only
 
 chip soc/intel/skylake
+	register "panel_cfg" = "{
+		.up_delay_ms		= 200,	// T3
+		.down_delay_ms		=  50,	// T10
+		.cycle_delay_ms		= 500,	// T12
+		.backlight_on_delay_ms	=  20,	// T7
+		.backlight_off_delay_ms	= 200,	// T9
+		.backlight_pwm_hz	= 200,
+	}"
+
+	# IGD Displays
+	register "gfx" = "GMA_STATIC_DISPLAYS(0)"
+
 	# FSP Configuration
 	register "SkipExtGfxScan" = "1"
 	register "SaGv" = "SaGv_Enabled"
@@ -30,42 +42,68 @@ chip soc/intel/skylake
 		device ref sa_thermal	on	end
 		device ref thermal	on	end
 		device ref heci1	on	end
+		device ref sata		on
+			register "SataPortsEnable[0]" = "true"	# M.2 SSD
+			register "SataPortsEnable[1]" = "true"	# M.2 SSD
+			register "SataPortsEnable[2]" = "true"	# 2.5" Disk
+			register "SataPortsEnable[3]" = "true"	# ODD
+			register "SataPortsDevSlp[2]" = "1"
+		end
 		device ref uart2	on	end
-		device ref pcie_rp1	on
-			device pci 00.0 on end # x4 TBT
-			register "PcieRpEnable[0]" = "true"
-			register "PcieRpClkReqSupport[0]" = "1"
-			register "PcieRpClkReqNumber[0]" = "4"
-			register "PcieRpClkSrcNumber[0]" = "4"
-			register "PcieRpHotPlug[0]" = "1"
-			register "PcieRpLtrEnable[0]" = "true"
-			smbios_slot_desc "SlotTypePciExpressGen3X4" "SlotLengthOther" "Thunderbolt/Type-C" "SlotDataBusWidth4X"
+		device ref south_xhci	on
+			# USB2
+			register "usb2_ports[0]" = "USB2_PORT_MID(OC_SKIP)"	# Type-A, left
+			register "usb2_ports[1]" = "USB2_PORT_TYPE_C(OC_SKIP)"	# Type-C, left
+			register "usb2_ports[2]" = "USB2_PORT_MID(OC_SKIP)"	# Type-A, left
+			register "usb2_ports[3]" = "USB2_PORT_FLEX(OC_SKIP)"	# 3G
+			register "usb2_ports[4]" = "USB2_PORT_FLEX(OC_SKIP)"	# Type-A, right
+			register "usb2_ports[5]" = "USB2_PORT_FLEX(OC_SKIP)"	# Camera
+			register "usb2_ports[9]" = "USB2_PORT_FLEX(OC_SKIP)"	# Bluetooth
+			# USB3
+			register "usb3_ports[0]" = "USB3_PORT_DEFAULT(OC_SKIP)"	# Type-A, left
+			register "usb3_ports[1]" = "USB3_PORT_DEFAULT(OC_SKIP)"	# Type-C, left
+			register "usb3_ports[2]" = "USB3_PORT_DEFAULT(OC_SKIP)"	# Type-A, left
+			register "usb3_ports[3]" = "USB3_PORT_DEFAULT(OC_SKIP)"	# LTE
+		end
+		device ref pcie_rp4	on
+			device pci 00.0 on end # x1 WLAN
+			register "PcieRpEnable[3]" = "true"
+			register "PcieRpClkReqSupport[3]" = "true"
+			register "PcieRpClkReqNumber[3]" = "4"
+			register "PcieRpClkSrcNumber[3]" = "4"
+			register "PcieRpLtrEnable[3]" = "true"
 		end
 		device ref pcie_rp5	on
-			device pci 00.0 on end # x1 LAN
+			device pci 00.0 on end # x1 Card Reader
 			register "PcieRpEnable[4]" = "true"
-			register "PcieRpClkReqSupport[4]" = "1"
-			register "PcieRpClkReqNumber[4]" = "3"
-			register "PcieRpClkSrcNumber[4]" = "3"
+			register "PcieRpClkReqSupport[4]" = "true"
+			register "PcieRpClkReqNumber[4]" = "4"
+			register "PcieRpClkSrcNumber[4]" = "4"
 			register "PcieRpLtrEnable[4]" = "true"
 		end
-		device ref pcie_rp6	on
-			device pci 00.0 on end # x1 WLAN
-			register "PcieRpEnable[5]" = "true"
-			register "PcieRpClkReqSupport[5]" = "1"
-			register "PcieRpClkReqNumber[5]" = "2"
-			register "PcieRpClkSrcNumber[5]" = "2"
-			register "PcieRpLtrEnable[5]" = "true"
-			smbios_slot_desc "SlotTypeM2Socket1_SD" "SlotLengthOther" "M.2/A/E 2230 (J_WLAN1)" "SlotDataBusWidth1X"
+		device ref pcie_rp7	on
+			device pci 00.0 on end # x2 USB 3.1 Host Controller
+			register "PcieRpEnable[6]" = "true"
+			register "PcieRpClkReqSupport[6]" = "true"
+			register "PcieRpClkReqNumber[6]" = "7"
+			register "PcieRpClkSrcNumber[6]" = "7"
+			register "PcieRpLtrEnable[6]" = "true"
 		end
 		device ref pcie_rp9	on
-			device pci 00.0 on end # x4 M.2/M (J_SSD1)
+			device pci 00.0 on end # x4 M.2 SSD
 			register "PcieRpEnable[8]" = "true"
-			register "PcieRpClkReqSupport[8]" = "1"
-			register "PcieRpClkReqNumber[8]" = "5"
-			register "PcieRpClkSrcNumber[8]" = "5"
+			register "PcieRpClkReqSupport[8]" = "true"
+			register "PcieRpClkReqNumber[8]" = "1"
+			register "PcieRpClkSrcNumber[8]" = "1"
 			register "PcieRpLtrEnable[8]" = "true"
-			smbios_slot_desc "SlotTypeM2Socket3" "SlotLengthOther" "M.2/M 2280 (J_SSD1)" "SlotDataBusWidth4X"
+		end
+		device ref pcie_rp13	on
+			device pci 00.0 on end # x1 LAN
+			register "PcieRpEnable[12]" = "true"
+			register "PcieRpClkReqSupport[12]" = "true"
+			register "PcieRpClkReqNumber[12]" = "13"
+			register "PcieRpClkSrcNumber[12]" = "13"
+			register "PcieRpLtrEnable[12]" = "true"
 		end
 		device ref lpc_espi	on
 			register "gen1_dec" = "0x000c0681"
