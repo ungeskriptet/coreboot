@@ -43,22 +43,25 @@ chip soc/intel/skylake
 		device ref thermal	on	end
 		device ref heci1	on	end
 		device ref sata		on
+			# Ports
 			register "SataPortsEnable[0]" = "true"	# M.2 SSD
 			register "SataPortsEnable[1]" = "true"	# M.2 SSD
 			register "SataPortsEnable[2]" = "true"	# 2.5" Disk
 			register "SataPortsEnable[3]" = "true"	# ODD
-			register "SataPortsDevSlp[2]" = "1"
+			# Device Sleep
+			register "SataPortsDevSlp[0]" = "true"	# M.2 SSD
+			register "SataPortsDevSlp[2]" = "true"	# 2.5" Disk
 		end
 		device ref uart2	on	end
 		device ref south_xhci	on
 			# USB2
-			register "usb2_ports[0]" = "USB2_PORT_MID(OC_SKIP)"	# Type-A, left
+			register "usb2_ports[0]" = "USB2_PORT_MID(OC0)"		# Type-A, left
 			register "usb2_ports[1]" = "USB2_PORT_TYPE_C(OC_SKIP)"	# Type-C, left
-			register "usb2_ports[2]" = "USB2_PORT_MID(OC_SKIP)"	# Type-A, left
-			register "usb2_ports[3]" = "USB2_PORT_FLEX(OC_SKIP)"	# 3G
-			register "usb2_ports[4]" = "USB2_PORT_FLEX(OC_SKIP)"	# Type-A, right
+			register "usb2_ports[2]" = "USB2_PORT_MID(OC1)"		# Type-A, left
+			register "usb2_ports[3]" = "USB2_PORT_FLEX(OC2)"	# 3G
+			register "usb2_ports[4]" = "USB2_PORT_FLEX(OC3)"	# Type-A, right
 			register "usb2_ports[5]" = "USB2_PORT_FLEX(OC_SKIP)"	# Camera
-			register "usb2_ports[9]" = "USB2_PORT_FLEX(OC_SKIP)"	# Bluetooth
+			register "usb2_ports[9]" = "USB2_PORT_FLEX(OC6)"	# Bluetooth
 			# USB3
 			register "usb3_ports[0]" = "USB3_PORT_DEFAULT(OC_SKIP)"	# Type-A, left
 			register "usb3_ports[1]" = "USB3_PORT_DEFAULT(OC_SKIP)"	# Type-C, left
