@@ -1,3 +1,3 @@
-/* SPDX-License-Identifier: CC-PDDC */
+/* SPDX-License-Identifier: GPL-2.0-only */
 
-/* Please update the license if adding licensable material. */
+#include <drivers/pc80/pc/ps2_controller.asl>
